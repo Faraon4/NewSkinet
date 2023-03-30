@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Programare\\CSharp\\AngularASP\\NewSkinet\\api\\API.csproj": {}
+    "D:\\Programare\\CSharp\\AngularASP\\NewSkinet\\API\\API.csproj": {}
   },
   "projects": {
-    "D:\\Programare\\CSharp\\AngularASP\\NewSkinet\\api\\API.csproj": {
+    "D:\\Programare\\CSharp\\AngularASP\\NewSkinet\\API\\API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Programare\\CSharp\\AngularASP\\NewSkinet\\api\\API.csproj",
+        "projectUniqueName": "D:\\Programare\\CSharp\\AngularASP\\NewSkinet\\API\\API.csproj",
         "projectName": "API",
-        "projectPath": "D:\\Programare\\CSharp\\AngularASP\\NewSkinet\\api\\API.csproj",
+        "projectPath": "D:\\Programare\\CSharp\\AngularASP\\NewSkinet\\API\\API.csproj",
         "packagesPath": "C:\\Users\\Radu\\.nuget\\packages\\",
-        "outputPath": "D:\\Programare\\CSharp\\AngularASP\\NewSkinet\\api\\obj\\",
+        "outputPath": "D:\\Programare\\CSharp\\AngularASP\\NewSkinet\\API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Radu\\AppData\\Roaming\\NuGet\\NuGet.Config",

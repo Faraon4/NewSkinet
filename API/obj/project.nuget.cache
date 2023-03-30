@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "BhKXbuQUWMibhCOv9aWNn+WfbwWqkBc9cQSn7lPFyqiqB4uiuiHI/CFMqNufLPfRH/5pxdN9eBdOjC/7QTYvLg==",
+  "dgSpecHash": "AHrv06HqbCTrOQNQG0us19TxUnik0EgTZOgZQG9R5E4mYPJlVmE3/jvE/tMy1LA+ZPYJ1hKUkjMTGbM4mUWSZA==",
   "success": true,
-  "projectFilePath": "D:\\Programare\\CSharp\\AngularASP\\NewSkinet\\api\\API.csproj",
+  "projectFilePath": "D:\\Programare\\CSharp\\AngularASP\\NewSkinet\\API\\API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Radu\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Radu\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.4\\microsoft.aspnetcore.openapi.7.0.4.nupkg.sha512",
