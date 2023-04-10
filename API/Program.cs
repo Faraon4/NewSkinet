@@ -19,7 +19,12 @@ builder.Services.AddDbContext<StoreContext>(opt =>
 builder.Services.AddScoped<IProductRepos, ProductRepository>(); // We can create AddTransient , or AddSingelton -> but AddScoped is better way and simpler
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>)); // We used the typeof and <>empty , because we have T there , where T can be of typeBaseEntity
 
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -28,6 +33,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+// We put this command here to tell the program to use static file , in our case are the images
+app.UseStaticFiles();
 
 app.UseAuthorization();
 
