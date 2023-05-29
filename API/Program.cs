@@ -1,5 +1,9 @@
+using API.Errors;
+using API.Extensions;
+using API.Middleware;
 using Core.Interfaces;
 using Infrastructure.Data;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,26 +11,18 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<StoreContext>(opt => 
-{
-    opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")); // Add the service of the connection to the db that we write in the appsetting.Dev.json
-});
-
-builder.Services.AddScoped<IProductRepos, ProductRepository>(); // We can create AddTransient , or AddSingelton -> but AddScoped is better way and simpler
-builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>)); // We used the typeof and <>empty , because we have T there , where T can be of typeBaseEntity
-
-
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
+builder.Services.AddApplicationServices(builder.Configuration);
 
 var app = builder.Build();
 
 
 // Configure the HTTP request pipeline.
+app.UseMiddleware<ExceptionMiddleware>(); // middleware : to show the server error correct
+
+app.UseStatusCodePagesWithReExecute("/errors/{0}"); //  we create a new controller, and here we put the route to there such whay when we hit a unexisting point we will have correct response
+
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
