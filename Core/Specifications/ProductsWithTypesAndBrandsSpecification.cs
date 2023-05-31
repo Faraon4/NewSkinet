@@ -13,10 +13,34 @@ namespace Core.Specifications
 
 
         // We use this ctor to get the list of products with types and brands
-       public ProductsWithTypesAndBrandsSpecification()
+       public ProductsWithTypesAndBrandsSpecification(string sort)
        {
         AddInclude(x => x.ProductType);
         AddInclude(x => x.ProductBrand);
+        //Default order if we do not have any sort
+        AddOrderBy(x => x.Name);
+
+
+      // sort can be priceAsc or priceDesc----> and base on this we write what to do based on the Evaluator
+
+        if (!string.IsNullOrEmpty(sort))
+        {
+            switch (sort)
+            {
+                case "priceAsc":
+                    AddOrderBy(p => p.Price);
+                    break;
+                
+                case "priceDesc":
+                    AddOrderByDescending(p => p.Price);
+                    break;
+
+
+                default :
+                    AddOrderBy(n => n.Name);
+                    break;
+            }
+        }
        }
 
         // Contructor to get ONE PRODUCT with type and brand

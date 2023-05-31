@@ -19,6 +19,17 @@ namespace Infrastructure.Data
                 query = query.Where(spec.Criteria);
             }
 
+            // We add the evaluation of the ordering by adding the two check if we fo have OrderBy parametere
+            if (spec.OrderBy != null)
+            {
+                query = query.OrderBy(spec.OrderBy);
+            }
+
+            if (spec.OrderByDescending != null)
+            {
+                query = query.OrderByDescending(spec.OrderByDescending);
+            }
+
             //Aggregate is putting toghether the Include that we have in the ProductRepository
             // query => is our query with the criteria (Where keyword)
             // current is the entoty that we are passing in here
