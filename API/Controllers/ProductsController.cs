@@ -28,11 +28,14 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<ProductToReturnDto>>> GetProducts(string sort)
+        public async Task<ActionResult<IReadOnlyList<ProductToReturnDto>>> GetProducts(
+            string sort, int? brandId, int? typeId)
         {
             //Adding the sort to our Specification , and by this , we are adding to the URL posibility to wwrite it
             // now it is like........?sort=priceAsc or ...?sort-priceDesc 
-            var specs = new ProductsWithTypesAndBrandsSpecification(sort);
+
+            // we add the ability to add the brandId and typeId which are optional 
+            var specs = new ProductsWithTypesAndBrandsSpecification(sort, brandId, typeId);
             var products = await _productsRepo.ListAsync(specs);
             return Ok(_mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductToReturnDto>>(products));
         }

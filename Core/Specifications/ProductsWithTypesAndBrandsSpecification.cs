@@ -13,7 +13,13 @@ namespace Core.Specifications
 
 
         // We use this ctor to get the list of products with types and brands
-       public ProductsWithTypesAndBrandsSpecification(string sort)
+       public ProductsWithTypesAndBrandsSpecification(string sort, int? brandId, int?typeId) 
+
+       // Because we already have a where operation for our Criteria in the Evaluator , we need to do like this in the base ctor
+        : base(x => 
+            (!brandId.HasValue || x.ProductBrandId == brandId) &&
+            (!typeId.HasValue || x.ProductTypeId == typeId)
+        )
        {
         AddInclude(x => x.ProductType);
         AddInclude(x => x.ProductBrand);
