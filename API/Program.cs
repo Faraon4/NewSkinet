@@ -32,6 +32,8 @@ if (app.Environment.IsDevelopment())
 // We put this command here to tell the program to use static file , in our case are the images
 app.UseStaticFiles();
 
+app.UseCors("CorsPolicy");
+
 app.UseAuthorization();
 
 app.MapControllers();

@@ -47,6 +47,20 @@ namespace API.Extensions
                     return new BadRequestObjectResult(errorResponse);
                 };
             });
+
+
+            // Cors -> we are allowing the browser to know from where the data is comming and where is going the https that we put here , ithe destination
+            // what to allow is also needed to be written here
+            // in this case is the header and the methods
+            // Name of the policy that we use is "CorsPolicy", and we add it as well in the Programclass
+            services.AddCors(opt => 
+            {
+                opt.AddPolicy("CorsPolicy", policy =>
+                {
+                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200");
+                });
+            });
+
             return services;
         }
     }
