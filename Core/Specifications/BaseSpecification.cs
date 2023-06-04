@@ -22,10 +22,18 @@ namespace Core.Specifications
         public List<Expression<Func<T, object>>> Includes {get;} = new List<Expression<Func<T, object>>>();
 
 
-        // Declareing the new expressions and line 40 , describe what to do
+        // Declareing the new expressions and down , we created propected method where describe what to do
         public Expression<Func<T, object>> OrderBy {get; private set;}
 
         public Expression<Func<T, object>> OrderByDescending {get; private set;}
+
+        // Properties used ofr pagination
+
+        public int Take {get; private set;}
+
+        public int Skip {get; private set;}
+
+        public bool IsPaginingEnabled {get; private set;}
 
 
         // Method that allow to include Includes in out List
@@ -45,6 +53,14 @@ namespace Core.Specifications
         protected void AddOrderByDescending(Expression<Func<T, object>> orderByDescExpression)
         {
             OrderByDescending = orderByDescExpression;
+        }
+
+        protected void ApplyPaging(int skip, int take)
+        {
+            Skip = skip;
+            Take = take;
+            IsPaginingEnabled = true; // We will use in the evaluator
+
         }
 
     }

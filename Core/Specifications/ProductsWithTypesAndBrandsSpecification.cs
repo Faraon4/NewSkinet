@@ -13,12 +13,12 @@ namespace Core.Specifications
 
 
         // We use this ctor to get the list of products with types and brands
-       public ProductsWithTypesAndBrandsSpecification(string sort, int? brandId, int?typeId) 
+       public ProductsWithTypesAndBrandsSpecification(ProductSpecParams productParams) 
 
        // Because we already have a where operation for our Criteria in the Evaluator , we need to do like this in the base ctor
         : base(x => 
-            (!brandId.HasValue || x.ProductBrandId == brandId) &&
-            (!typeId.HasValue || x.ProductTypeId == typeId)
+            (!productParams.BrandId.HasValue || x.ProductBrandId == productParams.BrandId) &&
+            (!productParams.TypeId.HasValue || x.ProductTypeId == productParams.TypeId)
         )
        {
         AddInclude(x => x.ProductType);
@@ -26,12 +26,15 @@ namespace Core.Specifications
         //Default order if we do not have any sort
         AddOrderBy(x => x.Name);
 
+        //Adding the pagination
+        ApplyPaging(productParams.PageSize * (productParams.PageIndex - 1), productParams.PageSize); // This is the formula that we need to use
+
 
       // sort can be priceAsc or priceDesc----> and base on this we write what to do based on the Evaluator
 
-        if (!string.IsNullOrEmpty(sort))
+        if (!string.IsNullOrEmpty(productParams.Sort))
         {
-            switch (sort)
+            switch (productParams.Sort)
             {
                 case "priceAsc":
                     AddOrderBy(p => p.Price);

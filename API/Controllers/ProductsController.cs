@@ -27,15 +27,19 @@ namespace API.Controllers
             _productsRepo = productsRepo;
         }
 
+        // We added the ProductSpecPrams class here , for not adding the params that we may add to the url
+        // Instead we created a class where we added all the parameters
+        // And because it is no more a QUERY STRING ---> api call cannot get it
+        // And for that we need to specify FromQuery
         [HttpGet]
         public async Task<ActionResult<IReadOnlyList<ProductToReturnDto>>> GetProducts(
-            string sort, int? brandId, int? typeId)
+            [FromQuery]ProductSpecParams productParams)
         {
             //Adding the sort to our Specification , and by this , we are adding to the URL posibility to wwrite it
             // now it is like........?sort=priceAsc or ...?sort-priceDesc 
 
             // we add the ability to add the brandId and typeId which are optional 
-            var specs = new ProductsWithTypesAndBrandsSpecification(sort, brandId, typeId);
+            var specs = new ProductsWithTypesAndBrandsSpecification(productParams);
             var products = await _productsRepo.ListAsync(specs);
             return Ok(_mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductToReturnDto>>(products));
         }

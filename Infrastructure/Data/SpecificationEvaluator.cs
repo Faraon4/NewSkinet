@@ -30,6 +30,11 @@ namespace Infrastructure.Data
                 query = query.OrderByDescending(spec.OrderByDescending);
             }
 
+            if (spec.IsPaginingEnabled)
+            {
+                query = query.Skip(spec.Skip).Take(spec.Take); // ordering is important , and paging operator need to come after any filter operation
+            }
+
             //Aggregate is putting toghether the Include that we have in the ProductRepository
             // query => is our query with the criteria (Where keyword)
             // current is the entoty that we are passing in here
