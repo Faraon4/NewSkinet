@@ -20,5 +20,14 @@ namespace Core.Specifications
         public int? BrandId { get; set; }
          public int? TypeId { get; set; }
          public string Sort { get; set; }
+
+         //Seach functionality
+         // We are doing such way because , even if in the search bar there will be uppercase leeter , they will be converted to the lower case
+        private string _search;
+        public string Search 
+        { get => _search; 
+          set => _search = value.ToLower();
+        }
+
     }
 }
