@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Pagination } from '../shared/models/pagination';
 import { Product } from '../shared/models/product';
@@ -13,8 +13,16 @@ export class ShopService {
 
   constructor(private http: HttpClient) { }
 
-  getProducts(){
-    return this.http.get<Pagination<Product[]>>(this.baseUrl + 'products?pageSize=50');
+  getProducts(brandId?: number, typeId?: number){
+    
+    // we need to create this because of the query string that our controller is using
+    let params = new HttpParams()
+    
+    if (brandId) params = params.append('brandId',brandId);
+    if (typeId) params= params.append('typeId', typeId)
+
+
+    return this.http.get<Pagination<Product[]>>(this.baseUrl + 'products', {params: params}); // This is the correct way to add query string params -> but in our case names are equal and we can just pu params
   }
 
   getBrands(){
