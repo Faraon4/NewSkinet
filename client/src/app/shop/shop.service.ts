@@ -13,13 +13,14 @@ export class ShopService {
 
   constructor(private http: HttpClient) { }
 
-  getProducts(brandId?: number, typeId?: number){
+  getProducts(brandId?: number, typeId?: number, sort?: string){
     
     // we need to create this because of the query string that our controller is using
     let params = new HttpParams()
     
     if (brandId) params = params.append('brandId',brandId);
     if (typeId) params= params.append('typeId', typeId)
+    if (sort) params= params.append('sort', sort)
 
 
     return this.http.get<Pagination<Product[]>>(this.baseUrl + 'products', {params: params}); // This is the correct way to add query string params -> but in our case names are equal and we can just pu params

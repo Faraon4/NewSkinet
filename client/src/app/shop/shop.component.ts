@@ -20,6 +20,14 @@ types: Type[] = []
 brandIdSelected = 0;
 typeIdSelected = 0;
 
+sortSelected = 'name';
+
+sortOptions = [
+  {name: 'Alphabetical', value: 'name'},
+  {name: 'Price: Low to High', value: 'priceAsc'},
+  {name: 'Price: High to Low', value: 'priceDesc'},
+]
+
 constructor(private shopService: ShopService) {}
 
   //Here comes the power of the ts
@@ -35,7 +43,7 @@ constructor(private shopService: ShopService) {}
   }
 
   getProducts(){
-    this.shopService.getProducts(this.brandIdSelected, this.typeIdSelected).subscribe({ //Order in () is important , is has to be as in the service
+    this.shopService.getProducts(this.brandIdSelected, this.typeIdSelected, this.sortSelected).subscribe({ //Order in () is important , is has to be as in the service
       next : response => this.products= response.data,
       error: error =>  console.log(error)
     })
@@ -64,6 +72,11 @@ constructor(private shopService: ShopService) {}
   onTypeSelected(typeId:  number) {
     this.typeIdSelected = typeId;
     this.getProducts(); // we call this to get the updated list of items after we pass the typeId parameter
+  }
+
+  onSortSelected(event: any){
+    this.sortSelected = event.target.value;
+    this.getProducts();
   }
 
 }
