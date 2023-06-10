@@ -26,6 +26,8 @@ sortOptions = [
   {name: 'Price: High to Low', value: 'priceDesc'},
 ]
 
+totalCount = 0;
+
 constructor(private shopService: ShopService) {}
 
   //Here comes the power of the ts
@@ -42,7 +44,12 @@ constructor(private shopService: ShopService) {}
 
   getProducts(){
     this.shopService.getProducts(this.shopParams).subscribe({ //Order in () is important , is has to be as in the service
-      next : response => this.products= response.data,
+      next : response => { // reponse is what we get back from the API -> in postman what we see 
+        this.products= response.data;
+        this.shopParams.pageNumber = response.pageIndex;
+        this.shopParams.pageSize = response.pageSize;
+        this.totalCount = response.count
+      },
       error: error =>  console.log(error)
     })
   }
@@ -75,6 +82,13 @@ constructor(private shopService: ShopService) {}
   onSortSelected(event: any){
     this.shopParams.sort = event.target.value;
     this.getProducts();
+  }
+
+  onPageChanged(event: any){
+    if(this.shopParams.pageNumber !== event.page) {
+      this.shopParams.pageNumber = event.page;
+      this.getProducts();
+    }
   }
   
 }
