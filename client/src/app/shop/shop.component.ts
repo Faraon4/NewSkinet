@@ -3,6 +3,7 @@ import { Product } from '../shared/models/product';
 import { ShopService } from './shop.service';
 import { Brand } from '../shared/models/brand';
 import { Type } from '../shared/models/type';
+import { ShopParams } from '../shared/models/shopParams';
 
 @Component({
   selector: 'app-shop',
@@ -17,10 +18,7 @@ brands: Brand[] = []
 // Be carefully from where do we import the type , there are many places from where we can import it , we need exactly our interface from shared module
 types: Type[] = []
 
-brandIdSelected = 0;
-typeIdSelected = 0;
-
-sortSelected = 'name';
+shopParams = new ShopParams;
 
 sortOptions = [
   {name: 'Alphabetical', value: 'name'},
@@ -43,7 +41,7 @@ constructor(private shopService: ShopService) {}
   }
 
   getProducts(){
-    this.shopService.getProducts(this.brandIdSelected, this.typeIdSelected, this.sortSelected).subscribe({ //Order in () is important , is has to be as in the service
+    this.shopService.getProducts(this.shopParams).subscribe({ //Order in () is important , is has to be as in the service
       next : response => this.products= response.data,
       error: error =>  console.log(error)
     })
@@ -65,18 +63,18 @@ constructor(private shopService: ShopService) {}
 
 
   onBrandSelected(brandId:  number) {
-    this.brandIdSelected = brandId;
+    this.shopParams.brandId = brandId;
     this.getProducts(); // we call this to get the updated list of items after we pass the brandId parameter
   }
 
   onTypeSelected(typeId:  number) {
-    this.typeIdSelected = typeId;
+    this.shopParams.typeId = typeId;
     this.getProducts(); // we call this to get the updated list of items after we pass the typeId parameter
   }
 
   onSortSelected(event: any){
-    this.sortSelected = event.target.value;
+    this.shopParams.sort = event.target.value;
     this.getProducts();
   }
-
+  
 }
