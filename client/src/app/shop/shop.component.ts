@@ -72,11 +72,13 @@ constructor(private shopService: ShopService) {}
 
   onBrandSelected(brandId:  number) {
     this.shopParams.brandId = brandId;
+    this.shopParams.pageNumber = 1;
     this.getProducts(); // we call this to get the updated list of items after we pass the brandId parameter
   }
 
   onTypeSelected(typeId:  number) {
     this.shopParams.typeId = typeId;
+    this.shopParams.pageNumber = 1;
     this.getProducts(); // we call this to get the updated list of items after we pass the typeId parameter
   }
 
@@ -95,6 +97,7 @@ constructor(private shopService: ShopService) {}
 
   onSearch() {
     this.shopParams.search = this.searchTerm?.nativeElement.value;
+    this.shopParams.pageNumber = 1;
     this.getProducts();
   }
   
