@@ -24,6 +24,8 @@ export class ShopService {
     params= params.append('sort', shopParams.sort)
     params= params.append('pageIndex', shopParams.pageNumber) // pageIndex is comming from our API , so be carefully with the naming
     params= params.append('pageSize', shopParams.pageSize)
+    if(shopParams.search) params= params.append('search', shopParams.search)
+
 
 
     return this.http.get<Pagination<Product[]>>(this.baseUrl + 'products', {params: params}); // This is the correct way to add query string params -> but in our case names are equal and we can just pu params
