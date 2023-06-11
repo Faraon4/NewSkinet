@@ -9,3 +9,19 @@
     top: -12px;
     right: 32px;
 }
+
+a {
+    text-decoration: none;
+    color: #343a40;
+
+    // Power of scss -> write that active class inside an a decorator
+    &.active {
+        color: orange;
+    }
+}
+
+
+
+.logo {
+    cursor: pointer;
+}
