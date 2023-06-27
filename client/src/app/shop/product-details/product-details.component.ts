@@ -24,7 +24,7 @@ export class ProductDetailsComponent implements OnInit {
       next: product => 
       {
         this.product = product,
-        this.bcService.set('@productDetails', product.name)
+        this.bcService.set('@productDetails', product.name) // This we take from shop-routing models
       },
       error: error => console.log(error)
     })
