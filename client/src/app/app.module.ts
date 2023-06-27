@@ -5,9 +5,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { CoreModule } from './core/core.module';
 import { HomeModule } from './home/home.module';
+import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,10 @@ import { HomeModule } from './home/home.module';
     CoreModule,
     HomeModule
   ],
-  providers: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true} // we created our own interceptor and for adding to the already created by angular interceptors, we write multi: true
+                                                                         //It acts as a middleware that sits between the client and the server, providing a powerful tool for modifying and enhancing HTTP communication.
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

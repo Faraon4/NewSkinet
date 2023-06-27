@@ -2,5 +2,6 @@
     "files.exclude": {
         "**/obj": true,
         "**/bin": true
-    }
+    },
+    "dotnet.defaultSolution": "NewSkinet.sln"
 }
