@@ -10,7 +10,7 @@ import { ShopComponent } from './shop.component';
 
 const routes: Routes = [
   {path: '', component: ShopComponent}, // we do not use the shop/ as path because this path is written in the shopModule where we call this module
-  {path: ':id', component: ProductDetailsComponent},
+  {path: ':id', component: ProductDetailsComponent, data: {breadcrumb: {alias: 'productDetails'}}},
 ]
 
 @NgModule({
