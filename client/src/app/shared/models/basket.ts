@@ -22,3 +22,10 @@ export class Basket implements Basket {
     items: BasketItem[] = [];
 }
   
+
+// We will use it to calculate the total of the basket
+export interface BasketTotals {
+  shipping: number;
+  subtotal: number;
+  total: number;
+}
