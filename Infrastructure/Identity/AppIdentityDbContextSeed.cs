@@ -18,6 +18,7 @@ namespace Infrastructure.Identity
                     DisplayName = "Bob",
                     Email = "bob@test.com",
                     UserName = "bob@test.com",
+                    // Address is other table name
                     Address = new Address
                     {
                         FristName = "Bob",
