@@ -477,3 +477,5 @@ $RECYCLE.BIN/
 *.lnk
 API/skinet.db-wal
 API/skinet.db-shm
+API/identity.db
+API/skinet.db
