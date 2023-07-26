@@ -1,7 +1,9 @@
+using System.Security.Claims;
 using API.Dtos;
 using API.Errors;
 using Core.Entities.Identity;
 using Core.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,6 +19,23 @@ namespace API.Controllers
             _tokenService = tokenService;
             _userManager = userManager;
             _signInManager = signInManager;
+        }
+
+
+        [HttpGet]
+        [Authorize]
+        public async Task<ActionResult<UserDto>> GetCurrentUser()
+        {
+            var email = HttpContext.User?.Claims?.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
+
+            var user = await _userManager.FindByEmailAsync(email);
+
+            return new UserDto 
+            {
+                Email = user.Email,
+                Token = _tokenService.CreateToken(user),
+                Displayname = user.DisplayName
+            };
         }
 
         [HttpPost("login")]
@@ -42,6 +61,26 @@ namespace API.Controllers
                 Displayname = user.DisplayName
             };
         }
+
+
+        //Check if an e-mail address is alreayd in use
+        //This can be a helper method , that can be used on client side for validation
+        [HttpGet("emailexists")]
+        public async Task<ActionResult<bool>> CheckEmailExistsAsync([FromQuery] string email)
+        {
+            return await _userManager.FindByEmailAsync(email) != null;
+        }
+        
+        [Authorize]
+        [HttpGet("address")]
+        public async Task<ActionResult<Address>> GetUserAddress()
+        {
+            var email = HttpContext.User?.Claims?.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
+
+            var user = await _userManager.FindByEmailAsync(email);
+            return user.Address;
+        }
+
 
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
