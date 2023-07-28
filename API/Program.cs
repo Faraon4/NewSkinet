@@ -17,6 +17,7 @@ builder.Services.AddControllers();
 
 builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddIdentityServices(builder.Configuration);
+builder.Services.AddSwaggerDocumentation(); // This is a new method that we added
 
 var app = builder.Build();
 
@@ -29,8 +30,7 @@ app.UseStatusCodePagesWithReExecute("/errors/{0}"); //  we create a new controll
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UserSwaggerDocumentation();
 }
 
 // We put this command here to tell the program to use static file , in our case are the images
