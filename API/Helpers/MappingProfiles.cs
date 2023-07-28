@@ -30,6 +30,9 @@ namespace API.Helpers
 
 
             CreateMap<Address, AddressDto>().ReverseMap();
+
+            CreateMap<CustomerBasketDto, CustomerBasket>(); // This are used for validation of the basket
+            CreateMap<BasketItemDto,BasketItem>(); // This are used for validation of the basket
         }
     }
 }
