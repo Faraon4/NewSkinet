@@ -13,6 +13,7 @@ const routes: Routes = [
   {path: 'shop', loadChildren: () => import('./shop/shop.module').then(m => m.ShopModule)}, // we are calling the shopModule where we have the routes
   {path: 'basket', loadChildren: () => import('./basket/basket.module').then(m => m.BasketModule)}, // We are calling the basket module
   {path: 'checkout', loadChildren: () => import('./checkout/checkout.module').then(m => m.CheckoutModule)}, // We are calling the basket module
+  {path: 'account', loadChildren: () => import('./account/account.module').then(m => m.AccountModule)}, // We are calling the basket module
   {path: '**', redirectTo: '', pathMatch: 'full'},
 ];
 
