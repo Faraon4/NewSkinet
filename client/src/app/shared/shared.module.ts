@@ -5,6 +5,7 @@ import { PagingHeaderComponent } from './paging-header/paging-header.component';
 import { PagerComponent } from './pager/pager.component'
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { OrderTotalsComponent } from './order-totals/order-totals.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -17,7 +18,8 @@ import { OrderTotalsComponent } from './order-totals/order-totals.component';
   imports: [
     CommonModule,
     PaginationModule.forRoot(), // use for root , because we want to use it as singleton,
-    CarouselModule.forRoot()
+    CarouselModule.forRoot(),
+    ReactiveFormsModule // we import it here in shared module , because we want to lazy-load it, next step is to import shred modules in the account module
   ],
   exports: [
    
@@ -25,7 +27,8 @@ import { OrderTotalsComponent } from './order-totals/order-totals.component';
     PagingHeaderComponent,
     PagerComponent,
     CarouselModule,
-    OrderTotalsComponent
+    OrderTotalsComponent,
+    ReactiveFormsModule
   ]
 })
 export class SharedModule { }
