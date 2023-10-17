@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   // loginForm will be used in the template to the the form to which element it is connected to
 loginForm = new FormGroup( {
-  email: new FormControl('', Validators.required),
+  email: new FormControl('', [Validators.required,Validators.email]),
   password: new FormControl('', Validators.required),
 })
 
