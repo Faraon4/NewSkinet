@@ -6,6 +6,8 @@ import { PagerComponent } from './pager/pager.component'
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { OrderTotalsComponent } from './order-totals/order-totals.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+
 
 
 
@@ -19,7 +21,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     PaginationModule.forRoot(), // use for root , because we want to use it as singleton,
     CarouselModule.forRoot(),
-    ReactiveFormsModule // we import it here in shared module , because we want to lazy-load it, next step is to import shred modules in the account module
+    ReactiveFormsModule, // we import it here in shared module , because we want to lazy-load it, next step is to import shred modules in the account module,
+    BsDropdownModule.forRoot() // user for the dropdown in the nav bar --login/logout part
   ],
   exports: [
    
@@ -28,7 +31,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     PagerComponent,
     CarouselModule,
     OrderTotalsComponent,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BsDropdownModule
   ]
 })
 export class SharedModule { }

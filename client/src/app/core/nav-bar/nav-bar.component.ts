@@ -10,7 +10,7 @@ import { BasketItem } from 'src/app/shared/models/basket';
 })
 export class NavBarComponent {
   // we are declaring it public , such way we'll be able to use it outside
- constructor(public basketService: BasketService, public accountService: AccountService) {}
+ constructor(public basketService: BasketService, public accountService: AccountService) {} // because we made the accountService public, we can use it dirrectly in the html template
 
 
  // this is a way to show all items in the basket -> even if we have 2 or more of the same kind

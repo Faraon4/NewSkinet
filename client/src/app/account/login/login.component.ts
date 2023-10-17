@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AccountService } from '../account.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -15,12 +16,13 @@ loginForm = new FormGroup( {
 })
 
 
-constructor(private accountService: AccountService) {}
+constructor(private accountService: AccountService, private router: Router) {}
 
-// this will be used in the template to say when press the submition button
+// this will be used in the template to say when press the submition button and will get login
+// in this case , after succeful login , it will redirect to the shop page
 onSubmit() {
   this.accountService.login(this.loginForm.value).subscribe({
-    next: user=> console.log(user)
+    next: user=> this.router.navigateByUrl('/shop')
   });
 }
 
