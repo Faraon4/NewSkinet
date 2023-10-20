@@ -17,7 +17,7 @@ namespace API.Extensions
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
         {
 
-        
+            
             services.AddDbContext<StoreContext>(opt =>
             {
                 opt.UseSqlite(config.GetConnectionString("DefaultConnection")); // Add the service of the connection to the db that we write in the appsetting.Dev.json
@@ -25,6 +25,8 @@ namespace API.Extensions
             services.AddSingleton<IConnectionMultiplexer>(c =>  // IconnectionMultiplexer -> it will be used by API to connect to RedisDb
             {
                 var options = ConfigurationOptions.Parse(config.GetConnectionString("Redis"));
+                options.AbortOnConnectFail = false;
+                
                 return ConnectionMultiplexer.Connect(options); // We return ConnectionMultiplexer, but at the beginning we are calling Interface with the same name
             }); 
 
