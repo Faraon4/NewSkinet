@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 
 namespace Core.Entities.OrderAggregate
 {
+    // Owned by the Order class
+    // it will be as snapshot for the product at the moment of time when it was ordered
     public class ProductItemOrdered
     {
         public ProductItemOrdered()

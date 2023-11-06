@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 namespace Core.Entities.OrderAggregate
 {
     public class DeliveryMethod : BaseEntity
+    // it derives from the baseentity , it will have the id and will have its own table
     {
         public string ShortName { get; set; }
         public string DeliveryTime { get; set; }

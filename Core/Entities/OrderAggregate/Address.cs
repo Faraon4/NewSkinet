@@ -26,6 +26,9 @@ namespace Core.Entities.OrderAggregate
             State = state;
             ZipCode = zipcode;
         }
+        
+        // We do not give Id because it will be own by the Order class entity
+        // it will not be a separate table
 
         public string FristName { get; set; }
         public string LastName { get; set; }
