@@ -33,6 +33,8 @@ namespace API.Helpers
 
             CreateMap<CustomerBasketDto, CustomerBasket>(); // This are used for validation of the basket
             CreateMap<BasketItemDto,BasketItem>(); // This are used for validation of the basket
+            CreateMap<AddressDto, Core.Entities.OrderAggregate.Address>(); // We need this address for orders, it is complitly different with the address upper , line 32
+            
         }
     }
 }
