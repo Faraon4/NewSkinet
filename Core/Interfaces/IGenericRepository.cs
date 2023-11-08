@@ -17,5 +17,12 @@ namespace Core.Interfaces
 
         // Method that will count all elemets that there are after all the filters are applied
         Task<int> CountAsync(ISpecification<T> spec);
+
+        // Method to support updating
+        // not async method, because not interact with db
+        // used for tracking
+        void Add(T entity);
+        void Update(T entity);
+        void Delete(T entity);
     }
 }

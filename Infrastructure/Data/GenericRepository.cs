@@ -47,5 +47,24 @@ namespace Infrastructure.Data
         {
             return SpecificationEvaluator<T>.GetQuery(_context.Set<T>().AsQueryable(), spec);
         }
+
+
+        // These 3 method are used to track the entity -> especially the order
+        // When we will use the Complete method, it will add to the db, and stop to track
+        public void Add(T entity)
+        {
+           
+            _context.Set<T>().Add(entity);
+        }
+
+        public void Update(T entity)
+        {_context.Set<T>().Attach(entity);
+        _context.Entry(entity).State = EntityState.Modified;
+        }
+
+        public void Delete(T entity)
+        {
+            _context.Set<T>().Remove(entity);
+        }
     }
 }
