@@ -6,6 +6,7 @@ using API.Dtos;
 using AutoMapper;
 using Core.Entities;
 using Core.Entities.Identity;
+using Core.Entities.OrderAggregate;
 
 namespace API.Helpers
 {
@@ -29,12 +30,16 @@ namespace API.Helpers
             .ForMember(d => d.PictureUrl, o => o.MapFrom<ProductUrlResolver>());
 
 
-            CreateMap<Address, AddressDto>().ReverseMap();
+            CreateMap<Core.Entities.Identity.Address, AddressDto>().ReverseMap();
 
             CreateMap<CustomerBasketDto, CustomerBasket>(); // This are used for validation of the basket
             CreateMap<BasketItemDto,BasketItem>(); // This are used for validation of the basket
             CreateMap<AddressDto, Core.Entities.OrderAggregate.Address>(); // We need this address for orders, it is complitly different with the address upper , line 32
             
+            // Order need to be imported from the ..Entities.OrderAggregate
+            CreateMap<Order, OrderToReturnDto>();
+            CreateMap<OrderItem, OrderItemDto>();
+
         }
     }
 }
