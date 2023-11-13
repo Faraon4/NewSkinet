@@ -37,9 +37,14 @@ namespace API.Helpers
             CreateMap<AddressDto, Core.Entities.OrderAggregate.Address>(); // We need this address for orders, it is complitly different with the address upper , line 32
             
             // Order need to be imported from the ..Entities.OrderAggregate
-            CreateMap<Order, OrderToReturnDto>();
-            CreateMap<OrderItem, OrderItemDto>();
+            CreateMap<Order, OrderToReturnDto>()
+                     .ForMember(dest => dest.DeliveryMethod, opt => opt.MapFrom(src => src.DeliveryMethod.ShortName))
+                     .ForMember(dest => dest.ShippingPrice, opt => opt.MapFrom(src => src.DeliveryMethod.Price));
 
+            CreateMap<OrderItem, OrderItemDto>()
+                     .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.ItemOrdered.ProductItemId))
+                     .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.ItemOrdered.ProductName))
+                     .ForMember(dest => dest.PictureUrl, opt => opt.MapFrom(src => src.ItemOrdered.PictureUrl));
         }
     }
 }
