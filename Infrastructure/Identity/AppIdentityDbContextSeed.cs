@@ -21,7 +21,7 @@ namespace Infrastructure.Identity
                     // Address is other table name
                     Address = new Address
                     {
-                        FristName = "Bob",
+                        FirstName = "Bob",
                         LastName = "Bobbity",
                         Street = "10 The Street",
                         City = "New York",
