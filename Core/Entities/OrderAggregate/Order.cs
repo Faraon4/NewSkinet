@@ -29,7 +29,7 @@ namespace Core.Entities.OrderAggregate
         public IReadOnlyList<OrderItem> OrderItems { get; set; }
         public decimal Subtotal { get; set; }
         public OrderStatus Status { get; set; } = OrderStatus.Pending;
-        public string PaymentIntentId { get; set; } // will be used for stripe payment
+        public string PaymenyIntentId { get; set; } // will be used for stripe payment
         public decimal GetTotal() // Get before the name it is used for automaper to execute method inside {} and map to a property called Total
         {
             return Subtotal + DeliveryMethod.Price;

@@ -55,7 +55,7 @@ namespace Infrastructure.Data.Migrations
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("PaymentIntentId")
+                    b.Property<string>("PaymenyIntentId")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Status")
@@ -174,7 +174,7 @@ namespace Infrastructure.Data.Migrations
                             b1.Property<string>("City")
                                 .HasColumnType("TEXT");
 
-                            b1.Property<string>("FirstName")
+                            b1.Property<string>("FristName")
                                 .HasColumnType("TEXT");
 
                             b1.Property<string>("LastName")

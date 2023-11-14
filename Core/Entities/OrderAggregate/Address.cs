@@ -19,7 +19,7 @@ namespace Core.Entities.OrderAggregate
                         string city, string state, string zipcode)
         {
 
-            FirstName = firstName;
+            FristName = firstName;
             LastName = lastName;
             Street = street;
             City = city;
@@ -30,7 +30,7 @@ namespace Core.Entities.OrderAggregate
         // We do not give Id because it will be own by the Order class entity
         // it will not be a separate table
 
-        public string FirstName { get; set; }
+        public string FristName { get; set; }
         public string LastName { get; set; }
         public string Street { get; set; }
         public string City { get; set; }
