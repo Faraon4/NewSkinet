@@ -1,1 +1,35 @@
-<p>checkout-address works!</p>
+<div class="mt-4" *ngIf="checkoutForm" [formGroup]="checkoutForm">
+    <div class="d-flex justify-content-between align-item-center">
+        <h4>Shipping Address</h4>
+        <button class="btn btn-outline-success mb-3">
+            Save as default address
+        </button>
+    </div>
+    <!--formGroupName should be used as we used in checkout.cmp.ts-->
+    <div class="row" formGroupName="addressForm">
+        <div class="form-group col-6">
+            <!--formControlName should match the name of prop that we mentioned in checkout.cmp.ts-->
+            <app-text-input [label]="'First Name'" formControlName="firstName"></app-text-input>
+        </div>
+        <div class="form-group col-6">
+            <!--formControlName should match the name of prop that we mentioned in checkout.cmp.ts-->
+            <app-text-input [label]="'Last Name'" formControlName="lastName"></app-text-input>
+        </div>
+        <div class="form-group col-6">
+            <!--formControlName should match the name of prop that we mentioned in checkout.cmp.ts-->
+            <app-text-input [label]="'Street'" formControlName="street"></app-text-input>
+        </div>
+        <div class="form-group col-6">
+            <!--formControlName should match the name of prop that we mentioned in checkout.cmp.ts-->
+            <app-text-input [label]="'City'" formControlName="city"></app-text-input>
+        </div>
+        <div class="form-group col-6">
+            <!--formControlName should match the name of prop that we mentioned in checkout.cmp.ts-->
+            <app-text-input [label]="'State'" formControlName="state"></app-text-input>
+        </div>
+        <div class="form-group col-6">
+            <!--formControlName should match the name of prop that we mentioned in checkout.cmp.ts-->
+            <app-text-input [label]="'Zip Code'" formControlName="zipcode"></app-text-input>
+        </div>
+    </div>
+</div>
