@@ -13,7 +13,7 @@ import { SharedModule } from '../shared/shared.module';
   imports: [
     CommonModule,
     BasketRoutingModule,
-    SharedModule
+    SharedModule // Having it , we can import info from shared modules
   ]
 })
 export class BasketModule { }
