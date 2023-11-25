@@ -7,7 +7,8 @@
                     (click)="onClick(i)"
                     [class.active]="selectedIndex === i"
                     class="nav-link py-3 text-uppercase fw-bold">
-                    {{step.label}}
+                    <!--using {{step.completed}} we can see true/false is the step is completed-->
+                    {{step.label}}:{{step.completed}}
                 </button>
             </div>
         </li>
