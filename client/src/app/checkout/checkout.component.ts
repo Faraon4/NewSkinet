@@ -1,14 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { AccountService } from '../account/account.service';
 
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.scss']
 })
-export class CheckoutComponent {
+export class CheckoutComponent implements OnInit {
 
-    constructor(private fb: FormBuilder) {}
+    constructor(private fb: FormBuilder, private accountService: AccountService) {}
+  ngOnInit(): void {
+    this.getAddressFormValues()
+  }
 
     // it will be used to track the checkout at every level
     // every new group will be used in the necesary html modules to check and to purside
@@ -28,4 +32,14 @@ export class CheckoutComponent {
         nameOnCard: ['', Validators.required]
       })
     })
+
+
+    // This method will autofil with necesary information
+    getAddressFormValues() {
+      this.accountService.getUserAddress().subscribe({
+        next: address => {
+          address && this.checkoutForm.get('addressForm')?.patchValue(address)
+        }
+      })
+    }
 }
