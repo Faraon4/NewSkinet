@@ -1,7 +1,12 @@
 <div class="mt-4" *ngIf="checkoutForm" [formGroup]="checkoutForm">
     <div class="d-flex justify-content-between align-item-center">
         <h4>Shipping Address</h4>
-        <button class="btn btn-outline-success mb-3">
+        <!--dirty used for the button if something is changed,before changes it should be disabled-->
+        <button class="btn btn-outline-success mb-3" 
+        (click)="saveUserAddress()"
+        [disabled]="!checkoutForm.get('addressForm')?.valid || 
+        !checkoutForm.get('addressForm')?.dirty"
+        >
             Save as default address
         </button>
     </div>
