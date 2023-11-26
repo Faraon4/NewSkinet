@@ -1,6 +1,7 @@
 import { Address } from "./user";
 
 
+// OrderToCreate should match the names in the OrderDto class
 export interface OrderToCreate {
     basketId: string;
     deliveryMethodId: number;
