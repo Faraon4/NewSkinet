@@ -13,8 +13,12 @@ export interface BasketItem {
 
 
 export interface Basket {
-    id: string
-    items: BasketItem[]
+    id: string;
+    items: BasketItem[];
+    //Must be carefully with this type of properties---> in this case it should be the same as in the CustomerBasketDto.cs. Types should be the same correct as in the dto class
+    clientSecret?: string;
+    paymentIntentId?: string;
+    deliveryMethodId?:number;
   }
 
 export class Basket implements Basket {
