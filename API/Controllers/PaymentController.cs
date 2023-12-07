@@ -16,7 +16,7 @@ namespace API.Controllers
 
         [Authorize]
         [HttpPost("{basketId}")] 
-        public async Task<ActionResult<CustomerBasket>> CreateOrUpdatePyymentIntenr(string basketId)
+        public async Task<ActionResult<CustomerBasket>> CreateOrUpdatePaymentIntent(string basketId)
         {
             return await _paymentService.CreateOrUpdatePaymenyIntent(basketId);
         }
