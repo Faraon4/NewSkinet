@@ -22,6 +22,7 @@ stripe: Stripe | null = null;
 cardNumber?: StripeCardNumberElement;
 cardExpiry?: StripeCardExpiryElement;
 cardCvc?: StripeCardCvcElement;
+cardErrors: any;
 
 
 constructor(private basketService: BasketService, 
@@ -39,12 +40,27 @@ constructor(private basketService: BasketService,
       if (elements) {
         this.cardNumber = elements.create('cardNumber');
         this.cardNumber.mount(this.cardNumberElement?.nativeElement);
+        // In case that there is an error , we want to display the message
+        this.cardNumber.on('change', event => {
+          if(event.error) this.cardErrors = event.error.message;
+          else this.cardErrors = null;
+        })
 
         this.cardExpiry = elements.create('cardExpiry');
         this.cardExpiry.mount(this.cardExpiryElement?.nativeElement);
+        // In case that there is an error , we want to display the message
+        this.cardExpiry.on('change', event => {
+          if(event.error) this.cardErrors = event.error.message;
+          else this.cardErrors = null;
+        })
 
         this.cardCvc = elements.create('cardCvc');
         this.cardCvc.mount(this.cardCvcElement?.nativeElement);
+        // In case that there is an error , we want to display the message
+        this.cardCvc.on('change', event => {
+          if(event.error) this.cardErrors = event.error.message;
+          else this.cardErrors = null;
+        })
       }
     })
   }
