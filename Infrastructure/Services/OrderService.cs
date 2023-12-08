@@ -66,16 +66,36 @@ namespace Infrastructure.Services
              // 4 
              var subtotal = items.Sum(item => item.Price * item.Quantity);
 
+
+             // NEW POINT
+             // CHECK IF ORDER EXISTS
+             var spec = new OrderByPaymentIntentIdSpecification(basket.PaymentIntentId);
+                 // Take care where the Order is comming -- we need from aggregate.Entities
+             var order = await _unitOfWork.Repository<Order>().GetEntityWithSpec(spec);
+
+             if(order != null) 
+             {
+                // if order exists , it is just updated
+                order.ShipToAddress = shippingAddress;
+                order.DeliveryMethod = deliveryMethod;
+                order.Subtotal = subtotal;
+                _unitOfWork.Repository<Order>().Update(order);
+             }
+             else 
+             {
              // 5
-             var order = new Order(items, buyerEmail, shippingAddress, deliveryMethod, subtotal);
+             order = new Order(items, buyerEmail, shippingAddress, deliveryMethod, subtotal, basket.PaymentIntentId);
              _unitOfWork.Repository<Order>().Add(order);
+             }
+
              // 6 TODO:
              var result = await _unitOfWork.Complete();
 
              if (result <= 0) return null; // <= 0 -- means that nothing had been saved in Db
 
+            // We comment this part of code now , because we want to delete the basket in other place and at other time| this is needed to be done on client side
              // 6.1 --Delete Basket
-             await _basketRepo.DeleteBasketAsync(basketId);
+            //  await _basketRepo.DeleteBasketAsync(basketId);
 
              // 7 
              return order;
