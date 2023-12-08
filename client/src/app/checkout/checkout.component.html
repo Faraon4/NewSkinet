@@ -9,7 +9,8 @@
                     <app-checkout-delivery [checkoutForm]="checkoutForm"></app-checkout-delivery>
                 </cdk-step>
                 <cdk-step [label]="'Review'">
-                    <app-checkout-review></app-checkout-review>
+                    <!--First [appStepper] var name in the ts file , seccond appStepper is the variable from here - from this template-->
+                    <app-checkout-review [appStepper]="appStepper"></app-checkout-review>
                 </cdk-step>
                 <cdk-step [label]="'Payment'">
                     <app-checkout-payment [checkoutForm]="checkoutForm"></app-checkout-payment> 
