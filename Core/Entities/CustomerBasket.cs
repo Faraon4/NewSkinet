@@ -25,5 +25,8 @@ namespace Core.Entities
 
         public string ClientSecret { get; set; } // used by stripe to confirm user payments
         public string PaymentIntentId { get; set; } // used for update the payment (ex: client change the delivery method)
+
+        // We add this property for keeping the information regaaarding shippingDelivery price everythime -- even when we reload the window 
+        public decimal ShippingPRice {get;set;}
     }
 }

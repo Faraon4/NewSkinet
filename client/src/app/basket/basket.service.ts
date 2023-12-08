@@ -15,7 +15,7 @@ export class BasketService {
   basketSource$ = this.basketSource.asObservable(); // create as observables for working with observables-> powerfull feature in angular
   private basketTotalSource = new BehaviorSubject<BasketTotals | null>(null);
   basketTotalSource$ = this.basketTotalSource.asObservable();
-  shipping = 0
+
 
   constructor(private http: HttpClient) { }
 
@@ -24,16 +24,17 @@ export class BasketService {
     .pipe( // Update basket observable when we get response from the post method that we describe just a line upper
       map(basket => {
         this.basketSource.next(basket);
-        console.log(basket);
+        // console.log(basket); --> this console.log was used to check if the payment was created and the detailes of the payment
       })
     )
   }
 
   setShippingPrice(deliveryMethod : DeliveryMethod) {
     const basket = this.getCurrentBasketValue();
-    this.shipping = deliveryMethod.price;
+    // basket?.shippingPrice = deliveryMethod.price; -- > if we keep it here , we will have error --> move it in the if statement
 
     if(basket) {
+      basket.shippingPrice = deliveryMethod.price;
       basket.deliveryMethodId = deliveryMethod.id;
       this.setBasket(basket);
     }
@@ -49,6 +50,7 @@ export class BasketService {
     })
   }
 
+  // This method is used to set everything on the REDDIS
   setBasket(basket: Basket) {
     return this.http.post<Basket>(this.baseUrl + 'basket', basket).subscribe({
       next: basket =>
@@ -145,8 +147,8 @@ private calculateTotals() {
   if(!basket) return;
                                         //(prev, currVa) -> the object that we are calculating
   const subtotal = basket.items.reduce((prevValue, currVall) => (currVall.price * currVall.quantity) + prevValue,0)
-  const total = subtotal + this.shipping;
-  this.basketTotalSource.next({shipping: this.shipping, total, subtotal})
+  const total = subtotal + basket.shippingPrice;
+  this.basketTotalSource.next({shipping: basket.shippingPrice, total, subtotal})
 }
 
 private isProduct(item: Product | BasketItem): item is Product {

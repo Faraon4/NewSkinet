@@ -19,11 +19,13 @@ export interface Basket {
     clientSecret?: string;
     paymentIntentId?: string;
     deliveryMethodId?:number;
+    shippingPrice: number;
   }
 
 export class Basket implements Basket {
     id = cuid(); // give us a unique string id
     items: BasketItem[] = [];
+    shippingPrice = 0;
 }
   
 
