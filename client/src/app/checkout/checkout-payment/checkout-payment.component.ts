@@ -7,6 +7,8 @@ import { Basket } from 'src/app/shared/models/basket';
 import { Address } from 'src/app/shared/models/user';
 import { NavigationExtras, Router } from '@angular/router';
 import { Stripe, StripeCardCvcElement, StripeCardExpiryElement, StripeCardNumberElement, loadStripe } from '@stripe/stripe-js';
+import { firstValueFrom } from 'rxjs';
+import { OrderToCreate } from 'src/app/shared/models/oreder';
 
 @Component({
   selector: 'app-checkout-payment',
@@ -23,6 +25,7 @@ cardNumber?: StripeCardNumberElement;
 cardExpiry?: StripeCardExpiryElement;
 cardCvc?: StripeCardCvcElement;
 cardErrors: any;
+loading = false;
 
 
 constructor(private basketService: BasketService, 
@@ -66,47 +69,64 @@ constructor(private basketService: BasketService,
   }
 
 
-  submitOrder() {
+  async submitOrder() {
+    this.loading = true;
     const basket = this.basketService.getCurrentBasketValue();
-    if (!basket) return;
-    const orderToCreate = this.getOrderToCreate(basket);
-    if(!orderToCreate) return;
+    try {
+      const createdOrder = await this.createsOrder(basket);
+      const paymentResult = await this.confirmPaymentWithStripe(basket);
 
-    this.checkoutService.createOrder(orderToCreate).subscribe({
-      next: order => {
-        this.toastr.success('Order created successfully');
-        this.stripe?.confirmCardPayment(basket.clientSecret!, {
-          payment_method: {
-            card: this.cardNumber!,
-            billing_details: {
-              name: this.checkoutForm?.get('paymentForm')?.get('nameOnCard')?.value
-            }
-          }
-        }).then(result => {
-          console.log(result);
-          // In case the payment was succesfull we display a green toastr
-          if (result.paymentIntent) {
-            this.basketService.deleteLocalBasket();
-            const navigationExtras: NavigationExtras = {state: order};
-            this.router.navigate(['checkout/success'], navigationExtras);
-          } 
-          else {
-            // In case the payment was declines we display an error toastr
-            this.toastr.error(result.error.message);
-          }
-        }
-        )
-
-
+      // In case the payment was succesfull we display a green toastr
+      if (paymentResult.paymentIntent) {
+        this.basketService.deleteLocalBasket();
+        const navigationExtras: NavigationExtras = {state: createdOrder};
+        this.router.navigate(['checkout/success'], navigationExtras);
+      } 
+      else {
+        // In case the payment was declines we display an error toastr
+        this.toastr.error(paymentResult.error.message);
       }
-    })
+
+    } catch (error: any) {
+      console.log(error);
+      this.toastr.error(error.message)
+    } finally {
+      this.loading = false;
+    }
+    
+  }
+  private confirmPaymentWithStripe(basket: Basket | null) {
+    if (!basket) throw new Error('Basket is null');
+    const result = this.stripe?.confirmCardPayment(basket.clientSecret!, {
+      payment_method: {
+        card: this.cardNumber!,
+        billing_details: {
+          name: this.checkoutForm?.get('paymentForm')?.get('nameOnCard')?.value
+        }
+      }
+    });
+    if(!result) throw new Error('Problem attempting payment with stripe');
+    return result
+  }
+  
+  
+  
+  
+  private async createsOrder(basket: Basket | null) {
+    if (!basket) throw new Error('Basket is null');
+    const orderToCreate = this.getOrderToCreate(basket);
+    return firstValueFrom(this.checkoutService.createOrder(orderToCreate)); // return a promise ??
+
   }
 
 
-  getOrderToCreate(basket: Basket) {
+
+
+  // We update to return specific smth otherwise , we get error in the create order line(119)
+  private getOrderToCreate(basket: Basket): OrderToCreate {
     const deliveryMethodId = this.checkoutForm?.get('deliveryForm')?.get('deliveryMethod')?.value;
     const shipToAddress = this.checkoutForm?.get('addressForm')?.value as Address;
-    if(!deliveryMethodId || !shipToAddress) return;
+    if(!deliveryMethodId || !shipToAddress) throw new Error('Problem with basket');
 
     return {
       basketId: basket.id,
