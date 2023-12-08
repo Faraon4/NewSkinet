@@ -84,14 +84,20 @@ constructor(private basketService: BasketService,
           }
         }).then(result => {
           console.log(result);
+          // In case the payment was succesfull we display a green toastr
           if (result.paymentIntent) {
             this.basketService.deleteLocalBasket();
             const navigationExtras: NavigationExtras = {state: order};
             this.router.navigate(['checkout/success'], navigationExtras);
+          } 
+          else {
+            // In case the payment was declines we display an error toastr
+            this.toastr.error(result.error.message);
           }
-        })
+        }
+        )
 
-        
+
       }
     })
   }
