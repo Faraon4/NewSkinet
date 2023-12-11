@@ -24,6 +24,9 @@ stripe: Stripe | null = null;
 cardNumber?: StripeCardNumberElement;
 cardExpiry?: StripeCardExpiryElement;
 cardCvc?: StripeCardCvcElement;
+cardNumberComplete = false;
+cardExpiryComplete = false;
+cardCvcComplete = false;
 cardErrors: any;
 loading = false;
 
@@ -45,6 +48,7 @@ constructor(private basketService: BasketService,
         this.cardNumber.mount(this.cardNumberElement?.nativeElement);
         // In case that there is an error , we want to display the message
         this.cardNumber.on('change', event => {
+          this.cardNumberComplete = event.complete;
           if(event.error) this.cardErrors = event.error.message;
           else this.cardErrors = null;
         })
@@ -53,6 +57,7 @@ constructor(private basketService: BasketService,
         this.cardExpiry.mount(this.cardExpiryElement?.nativeElement);
         // In case that there is an error , we want to display the message
         this.cardExpiry.on('change', event => {
+          this.cardExpiryComplete = event.complete;
           if(event.error) this.cardErrors = event.error.message;
           else this.cardErrors = null;
         })
@@ -61,11 +66,17 @@ constructor(private basketService: BasketService,
         this.cardCvc.mount(this.cardCvcElement?.nativeElement);
         // In case that there is an error , we want to display the message
         this.cardCvc.on('change', event => {
+          this.cardCvcComplete = event.complete;
           if(event.error) this.cardErrors = event.error.message;
           else this.cardErrors = null;
         })
       }
     })
+  }
+
+    // we can use this get method inside out butthon to decide rather to disable or not
+  get paymentFormComplete( ) {
+    return this.checkoutForm?.get('paymentForm')?.valid && this.cardNumberComplete && this.cardExpiryComplete && this.cardCvcComplete
   }
 
 
