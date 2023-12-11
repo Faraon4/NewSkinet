@@ -5,10 +5,12 @@
             <div class="d-grid">
                 <button 
                     (click)="onClick(i)"
+                    [disabled]="true"
                     [class.active]="selectedIndex === i"
                     class="nav-link py-3 text-uppercase fw-bold">
                     <!--using {{step.completed}} we can see true/false is the step is completed-->
-                    {{step.label}}:{{step.completed}}
+                    <!--:{{step.completed}} was used for test purpose to check if the step is completed or not-->
+                    {{step.label}}
                 </button>
             </div>
         </li>
