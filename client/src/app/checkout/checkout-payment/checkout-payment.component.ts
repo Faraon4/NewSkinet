@@ -83,13 +83,14 @@ constructor(private basketService: BasketService,
   async submitOrder() {
     this.loading = true;
     const basket = this.basketService.getCurrentBasketValue();
+    if(!basket) throw new Error('cannot get basket'); // implement the checking because when we want to delete basket , we cannot send a null element(live with deleting the basket)
     try {
       const createdOrder = await this.createsOrder(basket);
       const paymentResult = await this.confirmPaymentWithStripe(basket);
 
       // In case the payment was succesfull we display a green toastr
       if (paymentResult.paymentIntent) {
-        this.basketService.deleteLocalBasket();
+        this.basketService.deleteBasket(basket); // deleteBasket() method -> deletes the basket from redis and localy
         const navigationExtras: NavigationExtras = {state: createdOrder};
         this.router.navigate(['checkout/success'], navigationExtras);
       } 
